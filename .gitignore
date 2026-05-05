@@ -1,0 +1,8 @@
+models/
+logs/
+face_data.pkl
+blocked.json
+__pycache__/
+*.pyc
+*.h5
+*.pkl
