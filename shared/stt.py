@@ -241,9 +241,9 @@ OFFLINE_COMMANDS_AR = [
 class STT:
     def __init__(self):
         self.r = sr.Recognizer()
-        self.r.pause_threshold          = 0.6
-        self.r.phrase_threshold         = 0.3
-        self.r.non_speaking_duration    = 0.3
+        self.r.pause_threshold          = 0.85
+        self.r.phrase_threshold         = 0.25
+        self.r.non_speaking_duration    = 0.45
         self.r.dynamic_energy_threshold = False
         # خفضنا الحساسية لـ 150 للاستجابة الفورية والتوافق مع سماعات AirPods والميكروفونات الضعيفة
         self.r.energy_threshold         = 150

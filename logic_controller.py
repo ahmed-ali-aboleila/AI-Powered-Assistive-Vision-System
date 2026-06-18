@@ -385,7 +385,7 @@ class LogicController:
 
     def _wait_for_wake_word(self):
         """ينتظر wake word فقط — النظام صامت تماماً."""
-        text = self.stt.listen(timeout=5.0, phrase_limit=3.0, tts=self.tts)
+        text = self.stt.listen(timeout=5.0, phrase_limit=5.0, tts=self.tts)
         if not text:
             return
         t = text.lower().strip()
@@ -417,7 +417,7 @@ class LogicController:
             time.sleep(0.3)
             return
 
-        text = self.stt.listen(timeout=5.0, phrase_limit=4.0, tts=self.tts)
+        text = self.stt.listen(timeout=5.0, phrase_limit=6.0, tts=self.tts)
         if not text:
             return
 
