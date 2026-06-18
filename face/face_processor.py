@@ -81,6 +81,7 @@ class FaceProcessor:
         self._votes : dict = {}   # { grid_key: [name, ...] }
         self._vsize = 12
         self._last_known_by_grid : dict = {}  # { grid_key: (name, distance, timestamp) }
+        self._last_emb_by_grid : dict = {}    # { grid_key: embedding }
 
         # Pre-computed gamma LUT (1/1.5 gamma for low-light boost)
         # Computed once here instead of every frame
@@ -287,6 +288,15 @@ class FaceProcessor:
         # Vote buffer — 12 فريم، 72% أغلبية
         key = self._grid_key(box)
         now = time.time()
+        last_emb = self._last_emb_by_grid.get(key)
+        if last_emb is not None:
+            track_dist = 1.0 - float(np.dot(last_emb, emb))
+            reset_dist = getattr(config, "FACE_TRACK_RESET_DISTANCE", 0.42)
+            if track_dist > reset_dist:
+                self._votes.pop(key, None)
+                self._last_known_by_grid.pop(key, None)
+        self._last_emb_by_grid[key] = emb
+
         if raw_name == "Unknown":
             held = self._last_known_by_grid.get(key)
             hold_sec = getattr(config, "FACE_RECENT_HOLD_SEC", 2.5)
@@ -332,6 +342,9 @@ class FaceProcessor:
     @staticmethod
     def _vote(buf: list) -> str:
         if not buf: return "Unknown"
+        min_count = getattr(config, "RECOGNITION_VOTE_MIN_COUNT", 3)
+        if len(buf) < min_count:
+            return "Unknown"
         c = Counter(buf).most_common(1)[0]
         # نزلنا من 72% ل→ 65% — يتحمل حتى 35% من الفريمات فيها Unknown بسبب تعبير
         min_ratio = getattr(config, "RECOGNITION_VOTE_MIN_RATIO", 0.65)
@@ -347,6 +360,7 @@ class FaceProcessor:
     def reset(self):
         self._votes.clear()
         self._last_known_by_grid.clear()
+        self._last_emb_by_grid.clear()
 
     # ── Draw ──────────────────────────────────────────────────────────────────
 
