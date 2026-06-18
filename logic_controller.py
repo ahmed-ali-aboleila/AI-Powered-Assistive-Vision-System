@@ -172,7 +172,7 @@ _IMPROVE_WORDS = [
     "improve registration", "improved registration", "update registration",
     "حسن التسجيل", "حدث التسجيل", "حسن الشخص"
 ]
-_DEL_WORDS = ["delete person", "remove person", "delete number", "احذف شخص", "امسح شخص", "احذف رقم"]
+_DEL_WORDS = ["delete", "del", "remove", "delete person", "remove person", "delete number", "احذف", "امسح", "احذف شخص", "امسح شخص", "احذف رقم"]
 _CLEAR_ALL_WORDS = ["delete all", "delete all names", "امسح الكل", "احذف كل الاسماء", "احذف كل الأسماء"]
 _BLOCK_WORDS = ["block", "block person", "احظر", "احظر الشخص"]
 _UNBLK_WORDS = ["unblock", "unblock person", "فك حظر", "ارفع الحظر"]

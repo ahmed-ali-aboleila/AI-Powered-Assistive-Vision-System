@@ -262,6 +262,12 @@ class TestVoiceCommands(unittest.TestCase):
         self.reg.start_delete.assert_called_once()
         print("  ✓ 'vision delet person' -> delete person with confirmation")
 
+        for short_delete in ("delete", "del", "remove"):
+            self.reg.start_delete.reset_mock()
+            self._handle_spoken_phrase("vision", short_delete)
+            self.reg.start_delete.assert_called_once()
+            print(f"  ✓ 'vision {short_delete}' -> delete person with confirmation")
+
         self.reg.start_register.reset_mock()
         self._handle_spoken_phrase("فيج", "سجل")
         self.reg.start_register.assert_called_once()
