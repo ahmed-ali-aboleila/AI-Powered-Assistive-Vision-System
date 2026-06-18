@@ -7,6 +7,7 @@ shared/stt.py — v8
 - get_name() بينظف التكرار تلقائياً
 """
 import speech_recognition as sr
+import audioop
 import logging, time, threading, os, json, re
 import config
 
@@ -16,6 +17,25 @@ YES_EN = {"yes","yeah","yep","yup","y","sure","ok","okay","correct","right","ind
 YES_AR = {"نعم","أيوه","ايوه","أيوة","ايوة","تمام","ماشي","اوكي","صح","موافق","اه","أه","مظبوط","بالتأكيد", "فعلا", "طبعا"}
 NO_EN  = {"no","nope","nah","n","skip","cancel","stop","wrong","negative","don't","dont","refuse", "deny"}
 NO_AR  = {"لأ","لا","بلاش","الغي","الغ","مش","لا يا","خطأ","غلط","ارفض","إلغاء","الغاء"}
+
+_VOSK_NOISE_COMMAND_WORDS = {
+    "vision", "register", "save", "add", "person", "new", "learn",
+    "delete", "del", "remove", "erase", "forget", "clear", "wipe",
+    "block", "unblock", "allow", "all", "names", "arabic", "english",
+    "male", "female", "voice", "number", "one", "two", "three", "four",
+    "five", "six", "seven", "eight", "nine", "ten", "yes", "no",
+    "goodbye", "bye", "quiet", "mute", "silence", "unmute", "standby",
+    "pause", "resume", "continue",
+}
+
+
+def _looks_like_vosk_noise(text: str) -> bool:
+    words = re.findall(r"[a-zA-Z0-9]+", str(text or "").lower())
+    if len(words) < 5:
+        return False
+    hits = sum(1 for word in words if word in _VOSK_NOISE_COMMAND_WORDS)
+    return hits >= 3
+
 
 VOSK_MODEL_EN = os.environ.get("VOSK_MODEL_EN", "models/vosk-model")
 
@@ -499,6 +519,11 @@ class STT:
             if duration < 0.2:
                 print(f"[STT] Audio too short ({duration:.2f}s) — ignoring.")
                 return None
+            rms = audioop.rms(audio.get_raw_data(convert_width=2), 2)
+            min_rms = max(70, int(self.r.energy_threshold * 0.35))
+            if rms < min_rms:
+                print(f"[STT] Audio too quiet (RMS={rms}, min={min_rms}) — ignoring.")
+                return None
         except Exception:
             pass
 
@@ -613,6 +638,9 @@ class STT:
             result = json.loads(rec.Result())
             text   = result.get("text", "").strip()
             if text:
+                if not names_mode and _looks_like_vosk_noise(text):
+                    print(f"[STT] Vosk {label} noise-like phrase ignored: '{text}'")
+                    return None
                 print(f"[STT] Vosk {label}: '{text}'")
                 return text.lower()
             return None
@@ -645,6 +673,13 @@ class STT:
                     tts.say_wait(prompt)
                 continue
             t_clean = text.lower().strip()
+            words = re.findall(r"[\w\u0600-\u06ff]+", t_clean)
+            if len(words) > 3 or _looks_like_vosk_noise(t_clean):
+                print(f"[STT] '{text}' not a clear yes/no — attempt {i}/{tries}")
+                if tts is not None and i < tries:
+                    prompt = "عذراً، قل نعم أو لا فقط." if is_ar else "Sorry, please say only yes or no."
+                    tts.say_wait(prompt)
+                continue
             # التحقق من النفي أولاً
             if _has_word(t_clean, no_words):
                 print("[STT] NO")

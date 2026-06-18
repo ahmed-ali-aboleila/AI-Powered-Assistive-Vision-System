@@ -23,7 +23,7 @@ from logic_controller import (
     _WHO_WORDS, _LIST_WORDS, _QUIET_WORDS, _SPEAK_WORDS,
     _MALE_AR_WORDS, _FEMALE_AR_WORDS, _MALE_EN_WORDS, _FEMALE_EN_WORDS
 )
-from shared.stt import OFFLINE_COMMANDS_EN, OFFLINE_COMMANDS_AR
+from shared.stt import OFFLINE_COMMANDS_EN, OFFLINE_COMMANDS_AR, _looks_like_vosk_noise
 
 class TestVoiceCommands(unittest.TestCase):
     def setUp(self):
@@ -272,6 +272,14 @@ class TestVoiceCommands(unittest.TestCase):
         self._handle_spoken_phrase("فيج", "سجل")
         self.reg.start_register.assert_called_once()
         print("  ✓ 'فيج سجل' -> register")
+
+    def test_vosk_noise_phrase_filter(self):
+        self.assertTrue(_looks_like_vosk_noise("no delete add vision del is this number"))
+        self.assertTrue(_looks_like_vosk_noise("vision add unblock block person add remove"))
+        self.assertTrue(_looks_like_vosk_noise("all is male add yes add person nine"))
+        self.assertFalse(_looks_like_vosk_noise("vision delete person"))
+        self.assertFalse(_looks_like_vosk_noise("vision english female voice"))
+        print("  ✓ Vosk command-noise phrases are filtered")
 
 if __name__ == "__main__":
     unittest.main()
