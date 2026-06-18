@@ -57,6 +57,15 @@ def main():
     if not Path("models/vosk-model").exists():
         print("Warning: offline English commands will be limited without models/vosk-model.")
 
+    ar_vosk_paths = [
+        Path("models/vosk-model-ar"),
+        Path("models/vosk-model-ar-mgb2-0.4"),
+    ]
+    ar_vosk_ok = any(path.exists() for path in ar_vosk_paths)
+    print(f"{'Arabic Vosk model':20} {'OK' if ar_vosk_ok else 'MISSING'}")
+    if not ar_vosk_ok:
+        print("Warning: offline Arabic commands will be limited without an Arabic Vosk model.")
+
     print("READY" if ok else "NOT READY")
     raise SystemExit(0 if ok else 1)
 

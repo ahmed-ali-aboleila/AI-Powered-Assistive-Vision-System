@@ -1,9 +1,6 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-python3 -m venv .venv
-source .venv/bin/activate
-
 sudo apt update
 sudo apt install -y \
   python3-dev \
@@ -19,6 +16,9 @@ sudo apt install -y \
   zlib1g-dev \
   fonts-dejavu \
   fonts-liberation
+
+python3 -m venv .venv
+source .venv/bin/activate
 
 python -m pip install --upgrade pip setuptools wheel
 python -m pip install -r requirements-pi.txt
