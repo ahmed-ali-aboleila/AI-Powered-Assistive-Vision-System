@@ -21,6 +21,7 @@ Voting:   7 frames بالأغلبية لكل وجه منفصل
 import cv2
 import numpy as np
 import logging
+import time
 from typing import List, Tuple, Optional
 from collections import Counter
 import config
@@ -79,6 +80,7 @@ class FaceProcessor:
         # البفر 12 فريم، 72% أغلبية — كافي لمنع الأخطاء بدون إضافة تعقيد زيادة
         self._votes : dict = {}   # { grid_key: [name, ...] }
         self._vsize = 12
+        self._last_known_by_grid : dict = {}  # { grid_key: (name, distance, timestamp) }
 
         # Pre-computed gamma LUT (1/1.5 gamma for low-light boost)
         # Computed once here instead of every frame
@@ -263,8 +265,9 @@ class FaceProcessor:
             second_dist = sorted_scores[1][1]
             gap_ratio   = second_dist / (best_dist + 1e-6)
             min_gap = getattr(config, "FACE_GAP_RATIO", 1.04)
-            # لو الماتش قوي جداً (dist <= 0.44)، بنعتبره مؤكد مباشرة
-            if best_dist <= 0.44:
+            strong_dist = getattr(config, "FACE_STRONG_MATCH_DISTANCE", 0.40)
+            # لو الماتش قوي جداً، بنعتبره مؤكد مباشرة
+            if best_dist <= strong_dist:
                 confident = True
             else:
                 # لو الماتش متوسط، بنشترط فجوة بنسبة 1.04 على الأقل لمنع الخلط بين الأشخاص
@@ -283,13 +286,26 @@ class FaceProcessor:
 
         # Vote buffer — 12 فريم، 72% أغلبية
         key = self._grid_key(box)
+        now = time.time()
+        if raw_name == "Unknown":
+            held = self._last_known_by_grid.get(key)
+            hold_sec = getattr(config, "FACE_RECENT_HOLD_SEC", 2.5)
+            hold_dist = getattr(config, "FACE_RECENT_HOLD_DISTANCE", 0.53)
+            if held:
+                last_name, _last_dist, last_time = held
+                if best_name == last_name and best_dist <= hold_dist and (now - last_time) <= hold_sec:
+                    raw_name = last_name
+
         if key not in self._votes:
             self._votes[key] = []
         buf = self._votes[key]
         buf.append(raw_name)
         if len(buf) > self._vsize: buf.pop(0)
 
-        return self._vote(buf), score
+        voted_name = self._vote(buf)
+        if voted_name != "Unknown":
+            self._last_known_by_grid[key] = (voted_name, best_dist, now)
+        return voted_name, score
 
     def identify_blocked(self, emb: np.ndarray, db: dict) -> Optional[str]:
         """
@@ -330,6 +346,7 @@ class FaceProcessor:
 
     def reset(self):
         self._votes.clear()
+        self._last_known_by_grid.clear()
 
     # ── Draw ──────────────────────────────────────────────────────────────────
 
