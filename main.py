@@ -342,6 +342,9 @@ class AssistiveVisionSystem:
         faces = self._face_proc.detect(frame)
         if not faces:
             return []
+        max_faces = int(getattr(config, "MAX_FACES_PER_FRAME", 0) or 0)
+        if max_faces > 0 and len(faces) > max_faces:
+            faces = sorted(faces, key=lambda b: b[2] * b[3], reverse=True)[:max_faces]
 
         db          = self._face_db.all()
         face_thresh = self._face_threshold(brightness)
