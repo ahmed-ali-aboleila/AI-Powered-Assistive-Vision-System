@@ -217,6 +217,7 @@ class LogicController:
         self._session_active      = False
         self._command_in_progress = False
         self._last_command_time   = time.time()  # لتتبع وقت عدم النشاط
+        self._last_wake_google_time = 0.0
 
         # نزلنا من 5.0 ل→ 1.0 ثانية — السيستم جاهز للأوامر تقريباً فوراً بعد التشغيل
         threading.Timer(1.0, self._start_listener).start()
@@ -385,7 +386,18 @@ class LogicController:
 
     def _wait_for_wake_word(self):
         """ينتظر wake word فقط — النظام صامت تماماً."""
-        text = self.stt.listen(timeout=5.0, phrase_limit=5.0, tts=self.tts)
+        now = time.time()
+        google_interval = float(getattr(config, "WAKE_GOOGLE_FALLBACK_INTERVAL", 8.0))
+        allow_google = (now - self._last_wake_google_time) >= google_interval
+        if allow_google:
+            self._last_wake_google_time = now
+        text = self.stt.listen(
+            timeout=5.0,
+            phrase_limit=3.0,
+            tts=self.tts,
+            prefer_vosk=True,
+            google_fallback=allow_google,
+        )
         if not text:
             return
         t = text.lower().strip()

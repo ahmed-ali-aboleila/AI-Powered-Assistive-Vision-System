@@ -512,7 +512,9 @@ class STT:
                phrase_limit: float = 10.0,
                recal: bool = False,
                tts=None,
-               names_mode: bool = False) -> str | None:
+               names_mode: bool = False,
+               prefer_vosk: bool = False,
+               google_fallback: bool = True) -> str | None:
         """
         tts: مرجع لـ TTS object — لو موجود ينتظر لحد ما الـ TTS يخلص
              عشان الميكروفون ميلتقطش صوت السيستم نفسه
@@ -583,13 +585,18 @@ class STT:
         lang = getattr(config, "LANGUAGE", "en")
 
         result = None
-        if self._check_online():
+        if prefer_vosk and getattr(config, "VOSK_ENABLED", True):
+            result = self._vosk(audio, lang, names_mode=names_mode)
+            if result:
+                return result
+
+        if google_fallback and self._check_online():
             result = self._google(audio, lang, names_mode=names_mode)
             if not result:
                 print("[STT] Google failed — trying Vosk")
-                if getattr(config, "VOSK_ENABLED", True):
+                if not prefer_vosk and getattr(config, "VOSK_ENABLED", True):
                     result = self._vosk(audio, lang, names_mode=names_mode)
-        else:
+        elif not prefer_vosk:
             if getattr(config, "VOSK_ENABLED", True):
                 result = self._vosk(audio, lang, names_mode=names_mode)
 

@@ -154,6 +154,7 @@ STT_MIC_SKIP_WORDS = os.environ.get(
     "usb audio device",
 )
 STT_SUPPRESS_ALSA_ERRORS = _env_bool("VISION_SUPPRESS_ALSA_ERRORS", True)
+WAKE_GOOGLE_FALLBACK_INTERVAL = _env_float("VISION_WAKE_GOOGLE_INTERVAL", 8.0)
 
 # ══════════════════════════════════════════
 #  Performance & Quality Tuning
