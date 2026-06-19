@@ -12,6 +12,20 @@ def _env_bool(name: str, default: bool = False) -> bool:
     return value.strip().lower() in {"1", "true", "yes", "on"}
 
 
+def _env_int(name: str, default: int) -> int:
+    try:
+        return int(os.environ.get(name, str(default)))
+    except (TypeError, ValueError):
+        return default
+
+
+def _env_float(name: str, default: float) -> float:
+    try:
+        return float(os.environ.get(name, str(default)))
+    except (TypeError, ValueError):
+        return default
+
+
 IS_RASPBERRY_PI = (
     os.environ.get("VISION_RPI", "").strip().lower() in {"1", "true", "yes", "on"}
     or ("arm" in platform.machine().lower() or "aarch" in platform.machine().lower())
@@ -119,6 +133,16 @@ os.makedirs(LOG_DIR, exist_ok=True)
 # ══════════════════════════════════════════
 #  STT Settings
 # ══════════════════════════════════════════
+GOOGLE_STT_ENABLED = _env_bool("VISION_GOOGLE_STT", True)
+GOOGLE_STT_TIMEOUT = _env_float("VISION_GOOGLE_STT_TIMEOUT", 5.0)
+GOOGLE_STT_FAILS_BEFORE_OFFLINE = _env_int("VISION_GOOGLE_STT_FAILS_BEFORE_OFFLINE", 5)
+GOOGLE_STT_ONLINE_CHECK_INTERVAL = _env_float("VISION_GOOGLE_STT_CHECK_INTERVAL", 5.0)
+GOOGLE_STT_ONLINE_CHECK_TIMEOUT = _env_float("VISION_GOOGLE_STT_CHECK_TIMEOUT", 1.5)
+GOOGLE_STT_ONLINE_HOSTS = (
+    ("www.google.com", 443),
+    ("www.gstatic.com", 80),
+    ("8.8.8.8", 53),
+)
 VOSK_ENABLED = True   # False = Google only, True = Vosk fallback when offline
 STT_DEVICE_INDEX = None  # None = auto-select available microphone
 

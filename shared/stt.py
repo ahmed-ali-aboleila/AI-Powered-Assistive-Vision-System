@@ -8,7 +8,7 @@ shared/stt.py — v8
 """
 import speech_recognition as sr
 import audioop
-import logging, time, threading, os, json, re
+import logging, time, threading, os, json, re, socket
 import config
 
 logger = logging.getLogger(__name__)
@@ -264,6 +264,7 @@ class STT:
         self.r.pause_threshold          = 0.85
         self.r.phrase_threshold         = 0.25
         self.r.non_speaking_duration    = 0.45
+        self.r.operation_timeout        = getattr(config, "GOOGLE_STT_TIMEOUT", 5.0)
         self.r.dynamic_energy_threshold = False
         # خفضنا الحساسية لـ 150 للاستجابة الفورية والتوافق مع سماعات AirPods والميكروفونات الضعيفة
         self.r.energy_threshold         = 150
@@ -353,21 +354,25 @@ class STT:
     def _start_online_checker(self):
         def _check_loop():
             while True:
-                try:
-                    import socket
-                    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                    s.settimeout(2.0)
-                    try:
-                        s.connect(("www.google.com", 80))
-                        self._online = True
-                        self._google_fail_count = 0   # استعاد عند نجاح الاتصال
-                    finally:
-                        s.close()
-                except Exception:
-                    self._online = False
-                # تحقق كل 10 ثواني بدل 30 — استعادة أسرع
-                time.sleep(10.0)
+                online = self._probe_google_network()
+                self._online = online
+                if online:
+                    self._google_fail_count = 0
+                time.sleep(getattr(config, "GOOGLE_STT_ONLINE_CHECK_INTERVAL", 5.0))
         threading.Thread(target=_check_loop, daemon=True).start()
+
+    def _probe_google_network(self) -> bool:
+        if not getattr(config, "GOOGLE_STT_ENABLED", True):
+            return False
+        hosts = getattr(config, "GOOGLE_STT_ONLINE_HOSTS", (("www.google.com", 443),))
+        timeout = getattr(config, "GOOGLE_STT_ONLINE_CHECK_TIMEOUT", 1.5)
+        for host, port in hosts:
+            try:
+                with socket.create_connection((host, port), timeout=timeout):
+                    return True
+            except OSError:
+                continue
+        return False
 
     # ══════════════════════════════════════════════════════
     #  Vosk init
@@ -420,7 +425,7 @@ class STT:
     # ══════════════════════════════════════════════════════
 
     def _check_online(self) -> bool:
-        return self._online
+        return bool(getattr(config, "GOOGLE_STT_ENABLED", True) and self._online)
 
     # ══════════════════════════════════════════════════════
     #  Calibrate
@@ -534,9 +539,11 @@ class STT:
             result = self._google(audio, lang, names_mode=names_mode)
             if not result:
                 print("[STT] Google failed — trying Vosk")
-                result = self._vosk(audio, lang, names_mode=names_mode)
+                if getattr(config, "VOSK_ENABLED", True):
+                    result = self._vosk(audio, lang, names_mode=names_mode)
         else:
-            result = self._vosk(audio, lang, names_mode=names_mode)
+            if getattr(config, "VOSK_ENABLED", True):
+                result = self._vosk(audio, lang, names_mode=names_mode)
 
         # ── فلتر 3: نص قصير جداً — ممكن يكون ضوضاء اتعرف عليها غلط (مع استثناء الأرقام الفردية)
         if result and len(result.strip()) < 2 and not result.strip().isdigit():
@@ -551,10 +558,11 @@ class STT:
 
     def _google(self, audio, lang: str, names_mode: bool = False) -> str | None:
         google_lang = "ar-EG" if lang == "ar" else "en-US"
-        import socket
         old_timeout = socket.getdefaulttimeout()
+        timeout = getattr(config, "GOOGLE_STT_TIMEOUT", 5.0)
+        max_fails = getattr(config, "GOOGLE_STT_FAILS_BEFORE_OFFLINE", 5)
         try:
-            socket.setdefaulttimeout(7.0)
+            socket.setdefaulttimeout(timeout)
             text = self.r.recognize_google(audio, language=google_lang)
             print(f"[STT] Google ({google_lang}): '{text}'")
             # نجاح → صفر عداد الفشل
@@ -595,16 +603,16 @@ class STT:
             self._google_fail_count += 1
             # فقط لو فشل 3 مرات متتالية → نعتبره غير متصل
             # مشكلة واحدة ماتخليش السيستم فوراً
-            if self._google_fail_count >= 3:
+            if self._google_fail_count >= max_fails:
                 self._online = False
-                print("[STT] Google offline after 3 consecutive failures.")
+                print(f"[STT] Google offline after {max_fails} consecutive failures.")
             return None
         except Exception as e:
             print(f"[STT] Google exception/timeout error: {e}")
             self._google_fail_count += 1
-            if self._google_fail_count >= 3:
+            if self._google_fail_count >= max_fails:
                 self._online = False
-                print("[STT] Google offline after 3 consecutive failures.")
+                print(f"[STT] Google offline after {max_fails} consecutive failures.")
             return None
         finally:
             socket.setdefaulttimeout(old_timeout)
