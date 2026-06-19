@@ -9,9 +9,30 @@ shared/stt.py — v8
 import speech_recognition as sr
 import audioop
 import logging, time, threading, os, json, re, socket
+from contextlib import contextmanager
 import config
 
 logger = logging.getLogger(__name__)
+
+
+@contextmanager
+def _suppress_native_stderr(enabled: bool):
+    if not enabled or os.name == "nt":
+        yield
+        return
+    saved = None
+    devnull = None
+    try:
+        saved = os.dup(2)
+        devnull = os.open(os.devnull, os.O_WRONLY)
+        os.dup2(devnull, 2)
+        yield
+    finally:
+        if saved is not None:
+            os.dup2(saved, 2)
+            os.close(saved)
+        if devnull is not None:
+            os.close(devnull)
 
 YES_EN = {"yes","yeah","yep","yup","y","sure","ok","okay","correct","right","indeed", "agree", "confirm"}
 YES_AR = {"نعم","أيوه","ايوه","أيوة","ايوة","تمام","ماشي","اوكي","صح","موافق","اه","أه","مظبوط","بالتأكيد", "فعلا", "طبعا"}
@@ -292,7 +313,9 @@ class STT:
 
         try:
             import pyaudio
-            pa = pyaudio.PyAudio()
+            suppress_alsa = getattr(config, "STT_SUPPRESS_ALSA_ERRORS", True)
+            with _suppress_native_stderr(suppress_alsa):
+                pa = pyaudio.PyAudio()
             try:
                 input_devices = []
                 for i in range(pa.get_device_count()):
@@ -307,17 +330,30 @@ class STT:
                     print("[STT] No input microphones found; using system default.")
                     return None
 
-                priority_words = (
-                    "headset", "hands-free", "airpods", "freebuds",
-                    "microphone", "mic", "input", "capture",
+                skip_words = [
+                    word.strip().lower()
+                    for word in str(getattr(config, "STT_MIC_SKIP_WORDS", "")).split(",")
+                    if word.strip()
+                ]
+                filtered_devices = [
+                    device for device in input_devices
+                    if not any(skip in device[1].lower() for skip in skip_words)
+                ]
+                if not filtered_devices:
+                    filtered_devices = input_devices
+
+                priority_words = tuple(
+                    word.strip().lower()
+                    for word in str(getattr(config, "STT_MIC_PREFERRED_WORDS", "")).split(",")
+                    if word.strip()
                 )
                 ordered = []
                 for word in priority_words:
-                    for device in input_devices:
+                    for device in filtered_devices:
                         idx, name, _rate = device
                         if device not in ordered and word in name.lower():
                             ordered.append(device)
-                for device in input_devices:
+                for device in filtered_devices:
                     if device not in ordered:
                         ordered.append(device)
 
@@ -337,8 +373,10 @@ class STT:
 
     def _microphone_works(self, index) -> bool:
         try:
-            with sr.Microphone(device_index=index) as src:
-                self.r.adjust_for_ambient_noise(src, duration=0.05)
+            suppress_alsa = getattr(config, "STT_SUPPRESS_ALSA_ERRORS", True)
+            with _suppress_native_stderr(suppress_alsa):
+                with sr.Microphone(device_index=index) as src:
+                    self.r.adjust_for_ambient_noise(src, duration=0.05)
             return True
         except Exception:
             return False
@@ -407,6 +445,10 @@ class STT:
             # Arabic Vosk is optional. If the downloaded folder is incomplete, keep EN fallback alive.
             try:
                 if os.path.exists(VOSK_MODEL_AR):
+                    words_file = os.path.join(VOSK_MODEL_AR, "graph", "words.txt")
+                    if not os.path.exists(words_file):
+                        print(f"[STT] Arabic Vosk incomplete: missing {words_file}")
+                        return
                     print(f"[STT] Loading Arabic Vosk model: {VOSK_MODEL_AR}")
                     m2 = Model(VOSK_MODEL_AR)
                     # Some Arabic Vosk models do not support runtime grammar FSTs.

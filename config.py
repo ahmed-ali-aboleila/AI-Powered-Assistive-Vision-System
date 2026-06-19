@@ -145,6 +145,15 @@ GOOGLE_STT_ONLINE_HOSTS = (
 )
 VOSK_ENABLED = True   # False = Google only, True = Vosk fallback when offline
 STT_DEVICE_INDEX = None  # None = auto-select available microphone
+STT_MIC_PREFERRED_WORDS = os.environ.get(
+    "VISION_STT_MIC_PREFERRED_WORDS",
+    "pipewire,pulse,default,headset,hands-free,airpods,freebuds,microphone,mic,input,capture",
+)
+STT_MIC_SKIP_WORDS = os.environ.get(
+    "VISION_STT_MIC_SKIP_WORDS",
+    "usb audio device",
+)
+STT_SUPPRESS_ALSA_ERRORS = _env_bool("VISION_SUPPRESS_ALSA_ERRORS", True)
 
 # ══════════════════════════════════════════
 #  Performance & Quality Tuning

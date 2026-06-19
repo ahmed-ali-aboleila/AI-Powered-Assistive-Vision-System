@@ -156,6 +156,7 @@ class AssistiveVisionSystem:
         self._inference_busy   = False
         self._recognition_cycle = 0
         self._recognition_cache = {}
+        self._shutdown = False
 
         # ── Per-face emotion smoothing ─────────────────────────────────────
         # {face_id: deque of emotion indices}
@@ -313,7 +314,7 @@ class AssistiveVisionSystem:
     # ── Inference (background thread) ─────────────────────────────────────────
 
     def _run_inference(self, frame, frame_gray, brightness):
-        if self._inference_busy:
+        if self._shutdown or self._inference_busy:
             return
         self._inference_busy = True
 
@@ -572,7 +573,8 @@ class AssistiveVisionSystem:
                         result and
                         not result[0][1].startswith("__blocked__") and
                         result[0][4] < threshold and
-                        not self._stt.is_listening
+                        not self._stt.is_listening and
+                        not self._shutdown
                     )
                     if closest_needs_audio:
                         self._audio_det.analyze_async(self._on_audio_result)
@@ -668,13 +670,29 @@ class AssistiveVisionSystem:
                     if key == ord('q') or key == 27:
                         print("Exiting...")
                         break
+        except KeyboardInterrupt:
+            print("\nKeyboard interrupt received. Shutting down...")
 
         finally:
-            cap.release()
+            self._shutdown = True
+            try:
+                tts.stop()
+            except Exception:
+                pass
+            try:
+                cap.release()
+            except Exception as e:
+                print(f"WARNING: Camera release failed: {e}")
             if config.SHOW_WINDOW:
-                cv2.destroyAllWindows()
+                try:
+                    cv2.destroyAllWindows()
+                except Exception as e:
+                    print(f"WARNING: Window cleanup failed: {e}")
             if self._log_file:
-                self._log_file.close()
+                try:
+                    self._log_file.close()
+                except Exception:
+                    pass
             print("System closed.")
 
 

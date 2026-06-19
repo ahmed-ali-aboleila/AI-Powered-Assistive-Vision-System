@@ -11,6 +11,9 @@ export TF_NUM_INTRAOP_THREADS="${TF_NUM_INTRAOP_THREADS:-2}"
 export TF_NUM_INTEROP_THREADS="${TF_NUM_INTEROP_THREADS:-1}"
 export OPENBLAS_NUM_THREADS="${OPENBLAS_NUM_THREADS:-2}"
 export VISION_OPENCV_THREADS="${VISION_OPENCV_THREADS:-2}"
+export VISION_SUPPRESS_ALSA_ERRORS="${VISION_SUPPRESS_ALSA_ERRORS:-1}"
+export VISION_STT_MIC_PREFERRED_WORDS="${VISION_STT_MIC_PREFERRED_WORDS:-pipewire,pulse,default,headset,hands-free,airpods,freebuds,microphone,mic,input,capture}"
+export VISION_STT_MIC_SKIP_WORDS="${VISION_STT_MIC_SKIP_WORDS:-usb audio device}"
 
 if [ -d ".venv" ]; then
   source .venv/bin/activate
