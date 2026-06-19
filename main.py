@@ -49,6 +49,9 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import config
 from shared.model_runtime import TFLiteEmotionModel
 
+if getattr(config, "RPI_MODE", False):
+    cv2.setNumThreads(int(os.environ.get("VISION_OPENCV_THREADS", "2")))
+
 # ── Load emotion model BEFORE DeepFace (critical for keras compatibility) ─────
 os.environ['TF_USE_LEGACY_KERAS'] = '0'
 _emotion_model_global = None
@@ -151,6 +154,8 @@ class AssistiveVisionSystem:
         self._inference_lock   = threading.Lock()
         self._inference_result = None
         self._inference_busy   = False
+        self._recognition_cycle = 0
+        self._recognition_cache = {}
 
         # ── Per-face emotion smoothing ─────────────────────────────────────
         # {face_id: deque of emotion indices}
@@ -343,6 +348,10 @@ class AssistiveVisionSystem:
         db          = self._face_db.all()
         face_thresh = self._face_threshold(brightness)
         results     = []
+        self._recognition_cycle += 1
+        rec_every = max(1, int(getattr(config, "FACE_RECOGNITION_EVERY_N", 1)))
+        rec_cache_sec = float(getattr(config, "FACE_RECOGNITION_CACHE_SEC", 1.2))
+        now = time.time()
 
         # ── Per-face: liveness + recognition + crop ────────────────────────
         face_inputs = []   # batch for emotion model
@@ -351,6 +360,7 @@ class AssistiveVisionSystem:
         for box in faces:
             x, y, w, h = box
             area = w * h
+            face_id = self._face_proc._grid_key(box)
 
             # Liveness
             live, _ = self._face_proc.is_live(frame, box)
@@ -359,21 +369,33 @@ class AssistiveVisionSystem:
 
             # Recognition — use adaptive threshold
             name, rec_score = "Unknown", 0.0
-            emb = self._face_proc.embed(frame, box)
-            if emb is not None:
-                # Use local threshold to avoid race condition with main thread
-                local_thresh = face_thresh
-                blocked_match = self._face_proc.identify_blocked(emb, db)
-                if blocked_match:
-                    results.append((
-                        self._face_proc._grid_key(box),
-                        blocked_match, 1.0, "N/A", 0.0, box, area
-                    ))
-                    continue
-                original_thresh = self._face_proc.threshold
-                self._face_proc.threshold = local_thresh
-                name, rec_score = self._face_proc.identify(emb, db, box)
-                self._face_proc.threshold = original_thresh
+            cached = self._recognition_cache.get(face_id)
+            use_cache = (
+                cached is not None
+                and rec_every > 1
+                and self._recognition_cycle % rec_every != 0
+                and (now - cached[2]) <= rec_cache_sec
+            )
+            if use_cache:
+                name, rec_score = cached[0], cached[1]
+            else:
+                emb = self._face_proc.embed(frame, box)
+                if emb is not None:
+                    # Use local threshold to avoid race condition with main thread
+                    local_thresh = face_thresh
+                    blocked_match = self._face_proc.identify_blocked(emb, db)
+                    if blocked_match:
+                        self._recognition_cache[face_id] = (blocked_match, 1.0, now)
+                        results.append((
+                            face_id,
+                            blocked_match, 1.0, "N/A", 0.0, box, area
+                        ))
+                        continue
+                    original_thresh = self._face_proc.threshold
+                    self._face_proc.threshold = local_thresh
+                    name, rec_score = self._face_proc.identify(emb, db, box)
+                    self._face_proc.threshold = original_thresh
+                    self._recognition_cache[face_id] = (name, rec_score, now)
 
             # Crop face for emotion — collect for batch
             face_gray = frame_gray[max(0,y):y+h, max(0,x):x+w]
@@ -385,7 +407,6 @@ class AssistiveVisionSystem:
             else:
                 face_inputs.append(None)
 
-            face_id = self._face_proc._grid_key(box)
             face_meta.append((face_id, name, rec_score, box, area))
 
         # ── Batch emotion prediction [OPT #3] ─────────────────────────────
@@ -436,6 +457,12 @@ class AssistiveVisionSystem:
         if self._frame_count % 500 == 0:
             active_ids = {r[0] for r in results}
             self._cleanup_stale_histories(active_ids)
+            stale_cache = [
+                key for key, (_name, _score, ts) in self._recognition_cache.items()
+                if key not in active_ids or (now - ts) > rec_cache_sec * 3
+            ]
+            for key in stale_cache:
+                self._recognition_cache.pop(key, None)
 
         return results
 
@@ -449,24 +476,48 @@ class AssistiveVisionSystem:
 
     # ── Main Loop ─────────────────────────────────────────────────────────────
 
-    def run(self):
+    def _open_camera(self):
         cap = cv2.VideoCapture(config.CAMERA_INDEX)
         cap.set(cv2.CAP_PROP_FRAME_WIDTH,  config.FRAME_WIDTH)
         cap.set(cv2.CAP_PROP_FRAME_HEIGHT, config.FRAME_HEIGHT)
         cap.set(cv2.CAP_PROP_FPS,          config.TARGET_FPS)
+        try:
+            cap.set(cv2.CAP_PROP_BUFFERSIZE, 1)
+        except Exception:
+            pass
+        return cap
+
+    def run(self):
+        cap = self._open_camera()
 
         if not cap.isOpened():
             print("ERROR: Cannot open camera. Check CAMERA_INDEX in config.py")
             return
 
         print("Camera running...\n")
+        read_failures = 0
+        read_fail_limit = max(1, int(getattr(config, "CAMERA_READ_FAIL_LIMIT", 8)))
 
         try:
             while True:
                 ret, frame = cap.read()
                 if not ret:
-                    print("ERROR: Failed to read frame.")
-                    break
+                    read_failures += 1
+                    print(f"WARNING: Failed to read frame ({read_failures}/{read_fail_limit}).")
+                    time.sleep(0.2)
+                    if read_failures < read_fail_limit:
+                        continue
+
+                    print("WARNING: Reopening camera...")
+                    cap.release()
+                    time.sleep(1.0)
+                    cap = self._open_camera()
+                    if not cap.isOpened():
+                        print("ERROR: Cannot reopen camera. Check cable, power, and CAMERA_INDEX.")
+                        break
+                    read_failures = 0
+                    continue
+                read_failures = 0
 
                 self._update_fps()
                 self._frame_count += 1
