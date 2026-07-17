@@ -1,44 +1,79 @@
-# Models — too large for GitHub
-models/
-
-# Personal data
-face_data.pkl
-blocked.json
-
-# Logs
-logs/
-*.log
-
-# Python cache
+﻿# Python cache files
 __pycache__/
-*.pyc
+**/__pycache__/
+*.py[cod]
 *.pyo
 .pytest_cache/
 .mypy_cache/
+.ruff_cache/
 
-# Model files
-*.h5
-*.keras
-*.tflite
-*.pkl
-
-# Audio cache
-tts_cache/
-*.mp3
-*.wav
-
-# Environment
-.env
-*.env
+# Virtual environments
 .venv/
 venv/
+env/
+
+# IDE / editor files
+.vscode/
+.idea/
+
+# Operating system files
+.DS_Store
+Thumbs.db
+
+# Runtime-generated files
+logs/
+tts_cache/
+face_data.pkl
+blocked.json
+
+# Temporary files
+*.log
+*.tmp
+*.bak
+~$*
+
+# Environment / local secrets
+.env
+*.env
+
+# Training-generated checkpoints and experiment outputs
+# Do not ignore production models required by the app, such as:
+# models/cnn_v3_final.h5
+# models/cnn_v3_final.tflite
+checkpoints/
+checkpoint/
+runs/
+wandb/
+mlruns/
+*.ckpt
+*.ckpt.*
+*.weights.h5
+*.weights.keras
+*.backup
+
+
+# Large local raw datasets or exported training data
+# Keep this scoped so production files in models/ remain trackable.
+datasets/
+data/raw/
+data/interim/
+
+# AI models (download separately)
+models/*.h5
+models/*.keras
+models/*.tflite
+models/vosk-model/
+models/vosk-model-ar-mgb2-0.4/
 
 # Training folders
 cnn_v3/
 cnn_v6/
 ensemble/
 
-# Office temporary files
-~$*
-*.doc
-*.docx
+# Large production models (download separately)
+models/cnn_v3_final.h5
+models/cnn_v3_final.tflite
+models/cnn_v6_final.h5
+models/emotion_fixed.h5
+models/vosk-model/
+models/vosk-model-ar-mgb2-0.4/

@@ -1,0 +1,1244 @@
+[
+  {
+    "type": "paragraph",
+    "index": 1,
+    "text": "GRADUATION PROJECT REPORT",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 2,
+    "text": "Emotion Recognition & Face Recognition Module",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 4,
+    "text": "Part of: Assistive Vision System for Visually Impaired Users",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 8,
+    "text": "1. Project Overview",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 9,
+    "text": "This report documents the design, implementation, and evaluation of two AI modules for the Assistive Vision System — a graduation project aimed at helping visually impaired users understand their social environment through real-time audio feedback.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 11,
+    "text": "The system uses a camera to detect and recognize faces, analyze emotional states, and announce results via Text-to-Speech. Voice commands allow full interaction without keyboard or screen.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 13,
+    "text": "1.1 Modules in This Report",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 15,
+    "text": "1.2 System Objectives",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 16,
+    "text": "Detect and recognize faces in real time using deep learning.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 17,
+    "text": "Classify facial emotions from a CNN model trained on FER-2013 dataset.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 18,
+    "text": "Provide audio feedback to visually impaired users via Text-to-Speech.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 19,
+    "text": "Support offline operation using local Vosk speech recognition.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 20,
+    "text": "Deploy on Raspberry Pi 4 Model B for portable, wearable use.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 23,
+    "text": "2. System Architecture",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 24,
+    "text": "Both modules work under a unified Logic Controller. The decision pipeline for each detected face is shown below:",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 27,
+    "text": "Figure 1: System Logic Flow — Decision pipeline for each detected face",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 29,
+    "text": "2.1 Shared Components",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 32,
+    "text": "3. Emotion Recognition Module",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 33,
+    "text": "The Emotion Recognition module detects faces and classifies facial expressions into one of seven emotion categories in real time, providing the primary sensing capability for the assistive system.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 35,
+    "text": "3.1 Processing Pipeline",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 37,
+    "text": "Figure 2: Emotion Recognition Pipeline — Complete processing flow",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 39,
+    "text": "3.2 Dataset — FER-2013 + RAF-DB + CK+",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 41,
+    "text": "3.3 CNN Architecture",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 44,
+    "text": "3.4 Training Results",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 45,
+    "text": "CNN v3 — Final Selected Model (70 Epochs)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 47,
+    "text": "Figure 3: CNN v3 — Training Accuracy and Loss over 70 epochs (Final Model, 79.25%)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 49,
+    "text": "CNN v6 — VGG+CBAM (100 Epochs)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 51,
+    "text": "Figure 4: CNN v6 — VGG+CBAM Training Accuracy and Loss over 100 epochs (72.10%)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 54,
+    "text": "3.5 Evaluation Results",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 56,
+    "text": "Figure 5: Confusion Matrix — Ensemble v3+v6 + TTA on unified val set (81.35%)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 59,
+    "text": "Figure 6: Per-Class Emotion Accuracy — Ensemble v3+v6 + TTA (Overall: 81.35%)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 62,
+    "text": "Note: Human accuracy on FER-2013 is approximately 65%. The best published models achieve ~75% using architectures too large for Raspberry Pi. Our model matches human-level performance with only 1.5M parameters.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 64,
+    "text": "3.6 Face Detection — MTCNN vs Haar Cascade",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 66,
+    "text": "3.7 Audio Fallback",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 69,
+    "text": "4. Face Recognition Module",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 70,
+    "text": "The Face Recognition module identifies known individuals from a local database, detects blocked persons silently, and supports fully voice-controlled person management.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 72,
+    "text": "4.1 Processing Pipeline",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 74,
+    "text": "Figure 7: Face Recognition Pipeline — Complete processing flow",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 76,
+    "text": "4.2 Model Selection — Facenet512",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 78,
+    "text": "Figure 8: Face Recognition Models — LFW Benchmark Comparison",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 80,
+    "text": "Facenet512 was selected for its highest accuracy (99.65%) without requiring dlib or C++ compilation — critical for easy Raspberry Pi deployment.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 82,
+    "text": "4.3 Architecture",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 84,
+    "text": "4.4 Identity Matching",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 86,
+    "text": "Figure 9: Cosine Distance Distribution — Known vs Unknown persons",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 89,
+    "text": "4.5 Voice-Controlled Registration",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 92,
+    "text": "5. Integration & Logic System",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 93,
+    "text": "Both modules are unified under a Logic Controller managing all decisions, announcements, and voice interactions.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 95,
+    "text": "5.1 Logic Flow",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 97,
+    "text": "5.2 Component Latency",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 99,
+    "text": "Figure 10: System Components — Processing latency per component",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 101,
+    "text": "5.3 Voice Commands",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 103,
+    "text": "5.4 Speech Recognition Strategy",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 106,
+    "text": "6. Challenges & Solutions",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 109,
+    "text": "7. Final Results",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 112,
+    "text": "8. Raspberry Pi Deployment & Future Work",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 113,
+    "text": "8.1 Required Changes for Raspberry Pi",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 115,
+    "text": "8.2 Planned Improvements",
+    "style": "Heading 2"
+  },
+  {
+    "type": "paragraph",
+    "index": 116,
+    "text": "Convert model to TFLite for faster Raspberry Pi inference.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 117,
+    "text": "Replace Haar Cascade with MediaPipe for more robust face detection.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 118,
+    "text": "Add LSTM temporal modeling for more stable emotion predictions.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 119,
+    "text": "✅ Multi-language TTS + STT support (Arabic + English) — COMPLETED.",
+    "style": "List Paragraph"
+  },
+  {
+    "type": "paragraph",
+    "index": 122,
+    "text": "9. Tools & Technologies",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 125,
+    "text": "10. References",
+    "style": "Heading 1"
+  },
+  {
+    "type": "paragraph",
+    "index": 126,
+    "text": "[1] Goodfellow, I. et al. (2013). Challenges in Representation Learning. FER-2013 Dataset. ICML Workshop.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 128,
+    "text": "[2] Schroff, F. et al. (2015). FaceNet: A Unified Embedding for Face Recognition. CVPR 2015.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 130,
+    "text": "[3] Viola, P. & Jones, M. (2001). Rapid Object Detection using a Boosted Cascade of Simple Features. CVPR 2001. (Haar Cascade used in this project)",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 132,
+    "text": "[4] Ojala, T. et al. (2002). Multiresolution Gray-Scale Texture Classification with Local Binary Patterns. IEEE TPAMI.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 134,
+    "text": "[5] He, K. et al. (2016). Deep Residual Learning for Image Recognition. CVPR 2016.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 136,
+    "text": "[6] Srivastava, N. et al. (2014). Dropout: Preventing Neural Networks from Overfitting. JMLR.",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 138,
+    "text": "[7] Alphacep Vosk Speech Recognition Toolkit. https://alphacephei.com/vosk/",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 140,
+    "text": "[8] DeepFace Library. Serengil, S. https://github.com/serengil/deepface",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 142,
+    "text": "[9] FER-2013 Dataset. https://www.kaggle.com/datasets/msambare/fer2013",
+    "style": "None"
+  },
+  {
+    "type": "paragraph",
+    "index": 144,
+    "text": "[10] Huang, G.B. et al. (2008). Labeled Faces in the Wild (LFW). University of Massachusetts.",
+    "style": "None"
+  },
+  {
+    "type": "table",
+    "index": 0,
+    "rows": [
+      [
+        "Field",
+        "Details"
+      ],
+      [
+        "Student Name",
+        "Ahmed Ali Elsayed Ali Mohamed Abo-Leila"
+      ],
+      [
+        "Student ID",
+        "222101525"
+      ],
+      [
+        "Role",
+        "Computer Vision / AI Engineer"
+      ],
+      [
+        "Modules",
+        "Emotion Recognition + Face Recognition"
+      ],
+      [
+        "Target Hardware",
+        "Raspberry Pi 4 Model B"
+      ],
+      [
+        "Platform",
+        "Windows 10, Python 3.12"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 1,
+    "rows": [
+      [
+        "Module",
+        "Technology",
+        "Accuracy"
+      ],
+      [
+        "Emotion Recognition",
+        "CNN v3 + CNN v6 Ensemble + TTA",
+        "81.50%"
+      ],
+      [
+        "Face Recognition",
+        "Facenet512 + Haar Cascade + LBP",
+        "99.65%"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 2,
+    "rows": [
+      [
+        "Component",
+        "Technology",
+        "Purpose"
+      ],
+      [
+        "TTS Engine",
+        "Edge TTS Neural (ar-EG-SalmaNeural / en-US-AriaNeural)",
+        "Announce results to user"
+      ],
+      [
+        "STT Online",
+        "Google Speech API",
+        "Voice commands with internet"
+      ],
+      [
+        "STT Offline",
+        "Vosk local model",
+        "Voice commands without internet"
+      ],
+      [
+        "Logic Controller",
+        "Custom Python",
+        "Coordinate all decisions"
+      ],
+      [
+        "CSV Logger",
+        "Python csv",
+        "Log all detections with timestamps"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 3,
+    "rows": [
+      [
+        "Property",
+        "Value"
+      ],
+      [
+        "Total Images",
+        "35,887 (FER-2013) + RAF-DB + CK+"
+      ],
+      [
+        "Training Set",
+        "28,709 (FER-2013) + additional RAF-DB + CK+ samples"
+      ],
+      [
+        "Test Set",
+        "7,178 (FER-2013 test) + unified val set"
+      ],
+      [
+        "Image Size",
+        "48 x 48 pixels (grayscale)"
+      ],
+      [
+        "Classes",
+        "7: Angry, Disgust, Fear, Happy, Neutral, Sad, Surprise"
+      ],
+      [
+        "Source",
+        "FER-2013 (Kaggle/ICML 2013) + RAF-DB (Kaggle) + CK+ (Kaggle)"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 4,
+    "rows": [
+      [
+        "Layer",
+        "Type",
+        "Details"
+      ],
+      [
+        "Input",
+        "Input Layer",
+        "48 x 48 x 1 grayscale"
+      ],
+      [
+        "Block 1",
+        "Conv2D + BatchNorm + MaxPool",
+        "32 filters, 3×3, ReLU"
+      ],
+      [
+        "Block 2",
+        "Conv2D + BatchNorm + MaxPool",
+        "64 filters, 3×3, ReLU"
+      ],
+      [
+        "Block 3",
+        "Conv2D + BatchNorm + MaxPool",
+        "128 filters, 3×3, ReLU"
+      ],
+      [
+        "Block 4",
+        "Conv2D + BatchNorm + Residual",
+        "256 filters, skip connection"
+      ],
+      [
+        "Dense",
+        "Fully Connected + Dropout 0.5",
+        "512 neurons"
+      ],
+      [
+        "Output",
+        "Softmax",
+        "7 emotion classes"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 5,
+    "rows": [
+      [
+        "Property",
+        "Value"
+      ],
+      [
+        "Total Parameters",
+        "~1.5 Million (CNN v3) + ~14M (CNN v6 VGG+CBAM) = ~15.5M ensemble"
+      ],
+      [
+        "Model Size",
+        "5.71 MB (.h5 format)"
+      ],
+      [
+        "Optimizer",
+        "Adam (lr=0.001)"
+      ],
+      [
+        "Loss",
+        "Categorical Cross-Entropy"
+      ],
+      [
+        "Inference Time",
+        "~15ms (no TTA) / ~250ms (full TTA, 5 passes)"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 6,
+    "rows": [
+      [
+        "Model",
+        "Epochs",
+        "Val. Accuracy",
+        "Decision"
+      ],
+      [
+        "CNN v3",
+        "70",
+        "79.25%",
+        "SELECTED — best result"
+      ],
+      [
+        "CNN v6",
+        "100",
+        "72.10%",
+        "Used in Ensemble (weight=0.10)"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 7,
+    "rows": [
+      [
+        "Emotion",
+        "Accuracy",
+        "Notes"
+      ],
+      [
+        "Happy",
+        "93.5%",
+        "Distinct smile — easiest class"
+      ],
+      [
+        "Surprise",
+        "88.3%",
+        "Raised eyebrows unique feature"
+      ],
+      [
+        "Neutral",
+        "84.4%",
+        "Good baseline"
+      ],
+      [
+        "Disgust",
+        "69.4%",
+        "Sometimes confused with Angry"
+      ],
+      [
+        "Angry",
+        "73.9%",
+        "Confused with Neutral in low contrast"
+      ],
+      [
+        "Sad",
+        "71.6%",
+        "Overlaps with Neutral and Fear"
+      ],
+      [
+        "Fear",
+        "60.7%",
+        "Hardest — overlaps with multiple classes"
+      ],
+      [
+        "OVERALL",
+        "81.50%",
+        "Comparable to human accuracy on FER-2013"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 8,
+    "rows": [
+      [
+        "Feature",
+        "MTCNN (Rejected)",
+        "Haar Cascade (Used)"
+      ],
+      [
+        "Accuracy",
+        "Moderate",
+        "High"
+      ],
+      [
+        "Angled Faces",
+        "Poor",
+        "Good"
+      ],
+      [
+        "Confidence Score",
+        "No",
+        "Yes (threshold ≥ 0.90)"
+      ],
+      [
+        "Speed",
+        "~5ms",
+        "~35ms"
+      ],
+      [
+        "False Positives",
+        "High",
+        "Low"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 9,
+    "rows": [
+      [
+        "Property",
+        "Value"
+      ],
+      [
+        "Trigger",
+        "Emotion confidence below threshold (0.40–0.45)"
+      ],
+      [
+        "Duration",
+        "2.0 seconds audio recording"
+      ],
+      [
+        "Features",
+        "Energy (RMS), Pitch, Zero Crossing Rate"
+      ],
+      [
+        "Method",
+        "Rule-based classification"
+      ],
+      [
+        "Mode",
+        "Asynchronous (non-blocking)"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 10,
+    "rows": [
+      [
+        "Stage",
+        "Technology",
+        "Latency",
+        "Notes"
+      ],
+      [
+        "Face Detection",
+        "Haar Cascade",
+        "~5ms",
+        "Fast, CPU-only"
+      ],
+      [
+        "Liveness Check",
+        "LBP Texture",
+        "~2ms",
+        "Rejects screen photos"
+      ],
+      [
+        "Embedding",
+        "Facenet512",
+        "~120ms",
+        "Background thread"
+      ],
+      [
+        "Matching",
+        "Cosine Distance",
+        "~1ms",
+        "In-memory, instant"
+      ],
+      [
+        "Stability",
+        "7-frame Voting",
+        "Continuous",
+        "Prevents flickering"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 11,
+    "rows": [
+      [
+        "Threshold",
+        "Value",
+        "Purpose"
+      ],
+      [
+        "Recognition",
+        "cosine ≤ 0.50",
+        "Person identified as known"
+      ],
+      [
+        "Block Check",
+        "cosine ≤ 0.35",
+        "Stricter — confirms blocked person"
+      ],
+      [
+        "Vote",
+        "≥55% of 7 frames",
+        "Ensures stable identification"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 12,
+    "rows": [
+      [
+        "Step",
+        "Voice Interaction"
+      ],
+      [
+        "2. Name",
+        "System: \"Please say the name\" → User says name"
+      ],
+      [
+        "3. Confirm",
+        "System: \"I heard Ahmed. Correct?\" → \"yes\""
+      ],
+      [
+        "4. Capture",
+        "80 embeddings captured while user turns head"
+      ],
+      [
+        "5. Done",
+        "System: \"Ahmed registered\" → \"Ahmed looks Happy\""
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 13,
+    "rows": [
+      [
+        "Person State",
+        "System Action"
+      ],
+      [
+        "BLOCKED",
+        "Complete silence — no interaction at all"
+      ],
+      [
+        "KNOWN (emotion changed)",
+        "Announce: \"[Name] looks [Emotion]\""
+      ],
+      [
+        "KNOWN (same emotion)",
+        "Silent — no repeated announcements"
+      ],
+      [
+        "KNOWN (returned after 10s)",
+        "Re-announce name and emotion"
+      ],
+      [
+        "UNKNOWN",
+        "Announce: \"Unknown person, they look [Emotion]\""
+      ],
+      [
+        "Multiple faces",
+        "Announce one by one — closest person first"
+      ],
+      [
+        "Low confidence",
+        "Switch to audio fallback silently"
+      ],
+      [
+        "Low brightness",
+        "Announce once: \"Low light, relying on audio\""
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 14,
+    "rows": [
+      [
+        "Mode",
+        "Command",
+        "Action"
+      ],
+      [
+        "Session Active",
+        "\"register\"",
+        "Register current person in face database"
+      ],
+      [
+        "Session Active",
+        "\"register\"",
+        "Register current person in face database"
+      ],
+      [
+        "Session Active",
+        "\"block\"",
+        "Block current person permanently"
+      ],
+      [
+        "Session Active",
+        "\"unblock\"",
+        "Remove a person from blocked list"
+      ],
+      [
+        "Session Active",
+        "\"who\"",
+        "Identify person in front of camera"
+      ],
+      [
+        "Session Active",
+        "\"list\"",
+        "List all registered persons"
+      ],
+      [
+        "Session Active",
+        "\"delete\"",
+        "Delete a registered person"
+      ],
+      [
+        "Session Active",
+        "\"quiet\"",
+        "Suppress all announcements"
+      ],
+      [
+        "Session Active",
+        "\"speak\"",
+        "Resume announcements"
+      ],
+      [
+        "Session Active",
+        "\"stop\"",
+        "Stop current speech immediately"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 15,
+    "rows": [
+      [
+        "Mode",
+        "Engine",
+        "Condition"
+      ],
+      [
+        "Online",
+        "Google Speech API",
+        "Internet available — full vocabulary"
+      ],
+      [
+        "Offline",
+        "Vosk local model",
+        "No internet — predefined commands only"
+      ],
+      [
+        "Auto-switch",
+        "Every 10 seconds",
+        "Checks connectivity automatically"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 16,
+    "rows": [
+      [
+        "Challenge",
+        "Cause",
+        "Solution"
+      ],
+      [
+        "TTS silent on Windows",
+        "pyttsx3 fails in threads (COM issue)",
+        "Edge TTS timeout → SAPI fallback chain"
+      ],
+      [
+        "dlib install fails",
+        "Needs Visual Studio C++ compiler",
+        "Replaced with DeepFace (pip only)"
+      ],
+      [
+        "Persons confused",
+        "Pixel similarity not enough",
+        "Facenet512 + 7-frame voting"
+      ],
+      [
+        "Screen photos pass liveness",
+        "2D vs 3D indistinguishable",
+        "LBP texture threshold = 18.0"
+      ],
+      [
+        "Lag with 3+ persons",
+        "DeepFace sequential = 360ms",
+        "Parallel threads + 500ms interval"
+      ],
+      [
+        "CNN v6 VGG+CBAM poor accuracy",
+        "RGB model on grayscale data",
+        "Reverted to custom CNN"
+      ],
+      [
+        "Keras version mismatch",
+        "Old model format (batch_shape)",
+        "Converted to .h5 format"
+      ],
+      [
+        "Git push fails (429MB)",
+        "Dataset exceeds 100MB limit",
+        "Removed from history, Drive link"
+      ],
+      [
+        "Emotion repeated too often",
+        "TTS triggered every 6 seconds",
+        "Trigger on emotion change only"
+      ],
+      [
+        "STT fails offline",
+        "Google requires internet",
+        "Added Vosk offline fallback"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 17,
+    "rows": [
+      [
+        "Module",
+        "Metric",
+        "Result"
+      ],
+      [
+        "Emotion",
+        "Overall Accuracy (FER-2013 test)",
+        "81.50%"
+      ],
+      [
+        "Emotion",
+        "Best Class — Happy",
+        "93.5%"
+      ],
+      [
+        "Emotion",
+        "Weakest Class — Fear",
+        "60.7%"
+      ],
+      [
+        "Emotion",
+        "Model Size",
+        "5.71 MB"
+      ],
+      [
+        "Emotion",
+        "Inference Time",
+        "~15ms/frame (no TTA), ~250ms (TTA)"
+      ],
+      [
+        "Face",
+        "Accuracy (Facenet512 on LFW)",
+        "99.65%"
+      ],
+      [
+        "Face",
+        "Embedding Time",
+        "~120 ms (background)"
+      ],
+      [
+        "Face",
+        "Matching Time",
+        "~1 ms"
+      ],
+      [
+        "System",
+        "Camera FPS",
+        "15 FPS (640×480)"
+      ],
+      [
+        "System",
+        "Multi-face Support",
+        "Yes — closest first"
+      ],
+      [
+        "System",
+        "Offline STT",
+        "Yes — Vosk"
+      ],
+      [
+        "System",
+        "Wake Word",
+        "\"Vision\""
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 18,
+    "rows": [
+      [
+        "Component",
+        "Windows (Current)",
+        "Raspberry Pi (Planned)"
+      ],
+      [
+        "TTS Engine",
+        "Edge TTS Neural",
+        "espeak / pyttsx3 (Linux)"
+      ],
+      [
+        "Python",
+        "py -3.12",
+        "python3"
+      ],
+      [
+        "Camera Index",
+        "USB (index 1)",
+        "Pi Camera (index 0)"
+      ],
+      [
+        "Autostart",
+        "Manual run.bat",
+        "systemd service on boot"
+      ],
+      [
+        "Model Format",
+        ".h5",
+        "TFLite (3–5× faster on Pi)"
+      ]
+    ]
+  },
+  {
+    "type": "table",
+    "index": 19,
+    "rows": [
+      [
+        "Category",
+        "Technology",
+        "Version / Notes"
+      ],
+      [
+        "Language",
+        "Python",
+        "3.12"
+      ],
+      [
+        "Deep Learning",
+        "TensorFlow / Keras",
+        "2.21.0"
+      ],
+      [
+        "Face Recognition",
+        "DeepFace — Facenet512",
+        "Latest"
+      ],
+      [
+        "Emotion Detection",
+        "CNN v3 + CNN v6 Ensemble + TTA",
+        "FER-2013 + RAF-DB + CK+ (unified)"
+      ],
+      [
+        "Face Detection",
+        "OpenCV Haar Cascade",
+        "4.x"
+      ],
+      [
+        "Liveness",
+        "scikit-image LBP",
+        "Latest"
+      ],
+      [
+        "Audio",
+        "librosa + sounddevice",
+        "Rule-based fallback"
+      ],
+      [
+        "STT Online",
+        "Google Speech API",
+        "SpeechRecognition lib"
+      ],
+      [
+        "STT Offline",
+        "Vosk",
+        "0.3.45, small-en-us"
+      ],
+      [
+        "TTS",
+        "Edge TTS Neural",
+        "Microsoft Neural Voices (Edge TTS) + SAPI fallback"
+      ],
+      [
+        "Version Control",
+        "Git + GitHub",
+        "Code only"
+      ],
+      [
+        "Hardware",
+        "Raspberry Pi 4 Model B",
+        "Target: 4GB RAM"
+      ]
+    ]
+  }
+]

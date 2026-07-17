@@ -1,20 +1,34 @@
-tensorflow>=2.10.0
-tf-keras
-opencv-python
-numpy
-deepface
-mtcnn
-scikit-image
-SpeechRecognition
-pyaudio
-sounddevice
-librosa
-pyttsx3
-pywin32
-edge-tts
-pygame
-gtts
-vosk
-Pillow
-arabic-reshaper
-python-bidi
+﻿# Core runtime dependencies imported by the application
+numpy==2.4.2
+opencv-python==4.10.0.84
+tensorflow==2.21.0
+tf-keras==2.21.0
+deepface==0.0.100
+scikit-image==0.26.0
+SpeechRecognition==3.17.0
+PyAudio==0.2.14
+vosk==0.3.45
+edge-tts==7.2.8
+pygame==2.6.1
+Pillow==12.3.0
+arabic-reshaper==3.0.1
+python-bidi==0.6.11
+
+# Optional runtime features imported by the application when available
+mtcnn==1.0.0
+sounddevice==0.5.5
+librosa==0.11.0
+
+# Windows TTS backend imported by the application on Windows
+pywin32==312
+
+# Python 3.13 compatibility for the audioop module used by STT
+audioop-lts==0.2.2
+
+# Optional TensorFlow Lite runtimes imported conditionally by src/utils/model_runtime.py
+# Install one of these only when needed on the target platform.
+# ai-edge-litert
+# tflite-runtime
+
+# Documentation-only tools imported by docs/document/*.py, not required to run the app.
+# python-docx

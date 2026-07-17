@@ -1,0 +1,637 @@
+[
+  {
+    "index": 3,
+    "style": "Normal",
+    "text": "(EGB)"
+  },
+  {
+    "index": 30,
+    "style": "Normal",
+    "text": "(EGB)"
+  },
+  {
+    "index": 39,
+    "style": "Normal",
+    "text": "ABSTRACT"
+  },
+  {
+    "index": 46,
+    "style": "Normal",
+    "text": "ACKNOWLEDGEMENTS"
+  },
+  {
+    "index": 58,
+    "style": "Heading 1",
+    "text": "TABLE OF CONTENTS"
+  },
+  {
+    "index": 60,
+    "style": "Normal",
+    "text": "LIST OF FIGURES"
+  },
+  {
+    "index": 88,
+    "style": "Heading 3",
+    "text": "Figure Solenoid Distribution Across the Forehead (130° Haptic Feedback)"
+  },
+  {
+    "index": 89,
+    "style": "Heading 3",
+    "text": "Figure 27.69Final Prototype Design of the EGB Smart Glasses System"
+  },
+  {
+    "index": 90,
+    "style": "Heading 3",
+    "text": "Figure 28.69Rear View of the EGB System Showing Processing Unit and Connections"
+  },
+  {
+    "index": 91,
+    "style": "Heading 3",
+    "text": "Figure 29.73 illustrates the latency of each module, where all components operate within real-time c"
+  },
+  {
+    "index": 92,
+    "style": "Heading 3",
+    "text": "30.71: Electronic Glasses Circuit Diagram."
+  },
+  {
+    "index": 93,
+    "style": "Heading 3",
+    "text": "Figure 31.73 shows the accuracy of the system modules. The emotion detection module achieved improve"
+  },
+  {
+    "index": 97,
+    "style": "Normal",
+    "text": "LIST OF TABLES"
+  },
+  {
+    "index": 139,
+    "style": "Normal",
+    "text": "SYMBOLS & ABBREVIATIONS"
+  },
+  {
+    "index": 141,
+    "style": "Normal",
+    "text": "INTRODUCTION"
+  },
+  {
+    "index": 146,
+    "style": "Normal",
+    "text": "1.1.  \tProblem Statement"
+  },
+  {
+    "index": 152,
+    "style": "Normal",
+    "text": "1.2.  \tProject Purpose"
+  },
+  {
+    "index": 161,
+    "style": "Normal",
+    "text": "1.3.  \tProject Scope"
+  },
+  {
+    "index": 164,
+    "style": "Heading 1",
+    "text": "1.3.1 SYSTEM-LEVEL SCOPE"
+  },
+  {
+    "index": 171,
+    "style": "Heading 1",
+    "text": "1.3.2 HARDWARE SCOPE"
+  },
+  {
+    "index": 175,
+    "style": "Heading 1",
+    "text": "1.3.3 SOFTWARE AND EMBEDDED SYSTEMS SCOPE"
+  },
+  {
+    "index": 183,
+    "style": "Heading 1",
+    "text": "1.3.4 ARTIFICIAL INTELLIGENCE SCOPE"
+  },
+  {
+    "index": 192,
+    "style": "Heading 1",
+    "text": "1.3.5 SIMULATION AND VALIDATION SCOPE"
+  },
+  {
+    "index": 197,
+    "style": "Heading 1",
+    "text": "1.3.6 SCOPE LIMITATIONS"
+  },
+  {
+    "index": 204,
+    "style": "Heading 1",
+    "text": "1.3.7 ACADEMIC AND ENGINEERING SIGNIFICANCE"
+  },
+  {
+    "index": 210,
+    "style": "Normal",
+    "text": "1.4.  \tObjectives and Success Criteria of the Project"
+  },
+  {
+    "index": 264,
+    "style": "Normal",
+    "text": "RELATED WORK"
+  },
+  {
+    "index": 266,
+    "style": "Normal",
+    "text": "2.1.  \tExisting Systems"
+  },
+  {
+    "index": 296,
+    "style": "Normal",
+    "text": "2.2.  \tOverall Problems of Existing Systems"
+  },
+  {
+    "index": 306,
+    "style": "Normal",
+    "text": "2.3.  \tComparison Between Existing and Proposed Method"
+  },
+  {
+    "index": 315,
+    "style": "Normal",
+    "text": "3.METHODOLOGY"
+  },
+  {
+    "index": 319,
+    "style": "Normal",
+    "text": "3.1. Requirement Analysis"
+  },
+  {
+    "index": 321,
+    "style": "Normal",
+    "text": "3.1.1Functional Requirements"
+  },
+  {
+    "index": 328,
+    "style": "Heading 1",
+    "text": "3.1.2 NON-FUNCTIONAL REQUIREMENTS"
+  },
+  {
+    "index": 336,
+    "style": "Normal",
+    "text": "3.2. Design"
+  },
+  {
+    "index": 358,
+    "style": "Heading 1",
+    "text": "3.3 IMPLEMENTATION"
+  },
+  {
+    "index": 360,
+    "style": "Normal",
+    "text": "3.3.1 Hardware Deliverables"
+  },
+  {
+    "index": 389,
+    "style": "Normal",
+    "text": "3.3.3 Simulation and Integration"
+  },
+  {
+    "index": 396,
+    "style": "Heading 1",
+    "text": "3.4 TESTING"
+  },
+  {
+    "index": 398,
+    "style": "Normal",
+    "text": "3.4.1 Unit Testing"
+  },
+  {
+    "index": 410,
+    "style": "Heading 3",
+    "text": "3.4.2 Integration Testing"
+  },
+  {
+    "index": 412,
+    "style": "Heading 3",
+    "text": "3.4.3 Real-Time Testing"
+  },
+  {
+    "index": 415,
+    "style": "Heading 3",
+    "text": "3.4.4 User-Centric Testing"
+  },
+  {
+    "index": 419,
+    "style": "Normal",
+    "text": "3.4. Tools and Technology"
+  },
+  {
+    "index": 455,
+    "style": "Normal",
+    "text": "7.4Module D: OCR (Optical Character Recognition)"
+  },
+  {
+    "index": 472,
+    "style": "Normal",
+    "text": "4.A PLAN FOR EACH FUNCTION"
+  },
+  {
+    "index": 473,
+    "style": "Normal",
+    "text": "4.1. Voice Assistant"
+  },
+  {
+    "index": 475,
+    "style": "Normal",
+    "text": "4.1.1Module Overview"
+  },
+  {
+    "index": 490,
+    "style": "Normal",
+    "text": "4.1.2Module Objectives"
+  },
+  {
+    "index": 502,
+    "style": "Normal",
+    "text": "4.1.3Conceptual Flow"
+  },
+  {
+    "index": 513,
+    "style": "Normal",
+    "text": "4.1.4Non-Functional Requirements"
+  },
+  {
+    "index": 529,
+    "style": "Heading 1",
+    "text": "4.1.5MODULE ARCHITECTURE"
+  },
+  {
+    "index": 554,
+    "style": "Normal",
+    "text": "4.1.6Tools and Technologies"
+  },
+  {
+    "index": 568,
+    "style": "Normal",
+    "text": "4.1.7 Testing Strategy  Test Types"
+  },
+  {
+    "index": 601,
+    "style": "Normal",
+    "text": "4.1.9 System Integration"
+  },
+  {
+    "index": 613,
+    "style": "Normal",
+    "text": "4.1.10 Expected Results and Future Work"
+  },
+  {
+    "index": 633,
+    "style": "Normal",
+    "text": "4.2. Money Detection"
+  },
+  {
+    "index": 637,
+    "style": "Normal",
+    "text": "4.2.1Module Overview"
+  },
+  {
+    "index": 643,
+    "style": "Normal",
+    "text": "4.2.2Module Objectives"
+  },
+  {
+    "index": 658,
+    "style": "Normal",
+    "text": "4.2.3Functional Requirements"
+  },
+  {
+    "index": 668,
+    "style": "Normal",
+    "text": "4.2.4Non-Functional Requirements"
+  },
+  {
+    "index": 679,
+    "style": "Normal",
+    "text": "4.2.5Module Architecture"
+  },
+  {
+    "index": 701,
+    "style": "Heading 1",
+    "text": "4.2.6TOOLS & TECHNOLOGIES"
+  },
+  {
+    "index": 707,
+    "style": "Normal",
+    "text": "4.2.7Integration with System"
+  },
+  {
+    "index": 714,
+    "style": "Normal",
+    "text": "4.2.8Implementation Plan"
+  },
+  {
+    "index": 721,
+    "style": "Heading 1",
+    "text": "4.2.9EXPECTED RESULTS"
+  },
+  {
+    "index": 725,
+    "style": "Heading 1",
+    "text": "4.2.10DATASET SUMMARY"
+  },
+  {
+    "index": 730,
+    "style": "Heading 1",
+    "text": "4.2.11COMPARATIVE ANALYSIS OF ALTERNATIVE APPROACHES"
+  },
+  {
+    "index": 733,
+    "style": "Normal",
+    "text": "4.2.12WHY CNN IS MORE SUITABLE FOR THIS PROJECT CNNS PROVIDE:"
+  },
+  {
+    "index": 743,
+    "style": "Heading 1",
+    "text": "4.2.13CHALLENGES & FUTURE WORK 1 .CURRENT CHALLENGES"
+  },
+  {
+    "index": 747,
+    "style": "Heading 1",
+    "text": "2. FUTURE WORK (SECOND-TERM EXTENSION)"
+  },
+  {
+    "index": 760,
+    "style": "Normal",
+    "text": "4.3WakeAssistance"
+  },
+  {
+    "index": 765,
+    "style": "Normal",
+    "text": "4.3.2Module Objectives:"
+  },
+  {
+    "index": 773,
+    "style": "Normal",
+    "text": "4.3.3Functional Requirements"
+  },
+  {
+    "index": 793,
+    "style": "Normal",
+    "text": "4.3.4Non-Functional Requirements – Object, Angle, Distance, Depth"
+  },
+  {
+    "index": 810,
+    "style": "Normal",
+    "text": "4.4Face Emotion"
+  },
+  {
+    "index": 812,
+    "style": "Normal",
+    "text": "4.4.1Responsible Scope:"
+  },
+  {
+    "index": 814,
+    "style": "Normal",
+    "text": "4.4.2Module Overview"
+  },
+  {
+    "index": 817,
+    "style": "Normal",
+    "text": "4.4.3Module Objectives (Measurable)"
+  },
+  {
+    "index": 821,
+    "style": "Normal",
+    "text": "4.4.4 Functional Requirements"
+  },
+  {
+    "index": 829,
+    "style": "Normal",
+    "text": "4.4.5Non-Functional Requirements"
+  },
+  {
+    "index": 836,
+    "style": "Normal",
+    "text": "4.4.6Module Architecture (Flow Description)"
+  },
+  {
+    "index": 854,
+    "style": "Normal",
+    "text": "4.4.7 Tools & Technologies"
+  },
+  {
+    "index": 860,
+    "style": "Normal",
+    "text": "4.4.8 Implementation Plan Development Steps & Timeline (Oct–Nov 2025)"
+  },
+  {
+    "index": 879,
+    "style": "Normal",
+    "text": "4.4.9Testing Strategy"
+  },
+  {
+    "index": 898,
+    "style": "Normal",
+    "text": "4.4.10Integration with System"
+  },
+  {
+    "index": 904,
+    "style": "Normal",
+    "text": "4.4.11Expected Results (Definition of Success)"
+  },
+  {
+    "index": 910,
+    "style": "Normal",
+    "text": "4.4.12 Challenges & Future Work"
+  },
+  {
+    "index": 924,
+    "style": "Heading 1",
+    "text": "4.5.2MODULE OVERVIEW"
+  },
+  {
+    "index": 927,
+    "style": "Heading 1",
+    "text": "4.5.3MODULE OBJECTIVES"
+  },
+  {
+    "index": 931,
+    "style": "Heading 1",
+    "text": "4.5.4FUNCTIONAL REQUIREMENTS"
+  },
+  {
+    "index": 940,
+    "style": "Heading 1",
+    "text": "4.5.5NON-FUNCTIONAL REQUIREMENTS"
+  },
+  {
+    "index": 945,
+    "style": "Heading 1",
+    "text": "MODULE ARCHITECTURE (FLOWCHART DESCRIPTION)"
+  },
+  {
+    "index": 950,
+    "style": "Heading 1",
+    "text": "4.5.6PROCESSING STEPS"
+  },
+  {
+    "index": 959,
+    "style": "Heading 1",
+    "text": "OUTPUT"
+  },
+  {
+    "index": 963,
+    "style": "Heading 1",
+    "text": "4.5.7TOOLS & TECHNOLOGIES"
+  },
+  {
+    "index": 968,
+    "style": "Heading 1",
+    "text": "DEVELOPMENT STEPS"
+  },
+  {
+    "index": 974,
+    "style": "Heading 1",
+    "text": "TIMELINE"
+  },
+  {
+    "index": 979,
+    "style": "Heading 1",
+    "text": "IMPLEMENTATION PLAN (GANTT CHART)"
+  },
+  {
+    "index": 981,
+    "style": "Heading 1",
+    "text": "4.5.8TESTING STRATEGY  TEST TYPES"
+  },
+  {
+    "index": 985,
+    "style": "Heading 1",
+    "text": "TEST SCENARIOS"
+  },
+  {
+    "index": 988,
+    "style": "Heading 1",
+    "text": "4.5.9INTEGRATION WITH SYSTEM"
+  },
+  {
+    "index": 992,
+    "style": "Heading 1",
+    "text": "4.5.10EXPECTED RESULTS"
+  },
+  {
+    "index": 994,
+    "style": "Heading 1",
+    "text": "4.5.11CHALLENGES & FUTURE WORK  CHALLENGES"
+  },
+  {
+    "index": 998,
+    "style": "Heading 1",
+    "text": "FUTURE WORK"
+  },
+  {
+    "index": 1004,
+    "style": "Normal",
+    "text": "4.6 OCR"
+  },
+  {
+    "index": 1071,
+    "style": "Heading 3",
+    "text": "Figure 27.69: Rear View of the EGB Prototype Showing Hardware Connections and Processing UnitThe rea"
+  },
+  {
+    "index": 1095,
+    "style": "Normal",
+    "text": "5. EXPERIMENTAL RESULTS"
+  },
+  {
+    "index": 1097,
+    "style": "Normal",
+    "text": "5.1 Walk Object"
+  },
+  {
+    "index": 1100,
+    "style": "Heading 2",
+    "text": "5.2 OCR Module"
+  },
+  {
+    "index": 1103,
+    "style": "Heading 2",
+    "text": "5.3Money Detection Module"
+  },
+  {
+    "index": 1106,
+    "style": "Heading 2",
+    "text": "5.4Face Recognition and Emotion Detection"
+  },
+  {
+    "index": 1110,
+    "style": "Heading 2",
+    "text": "5.5Overall System Performance(voice)"
+  },
+  {
+    "index": 1119,
+    "style": "Normal",
+    "text": "6. DISCUSSION"
+  },
+  {
+    "index": 1151,
+    "style": "Normal",
+    "text": "7.CONCLUSIONS"
+  },
+  {
+    "index": 1160,
+    "style": "Normal",
+    "text": "8. REFERENCES"
+  },
+  {
+    "index": 1212,
+    "style": "Heading 1",
+    "text": "9. APPENDICES"
+  },
+  {
+    "index": 1213,
+    "style": "Heading 1",
+    "text": "9.1 Appendix"
+  },
+  {
+    "index": 1214,
+    "style": "Heading 2",
+    "text": "System Architecture of the EGB System"
+  },
+  {
+    "index": 1220,
+    "style": "Heading 1",
+    "text": "9.2 Appendix"
+  },
+  {
+    "index": 1221,
+    "style": "Heading 2",
+    "text": "Software Implementation and Source Code Overview"
+  },
+  {
+    "index": 1229,
+    "style": "Heading 1",
+    "text": "9.3 Appendix"
+  },
+  {
+    "index": 1230,
+    "style": "Heading 2",
+    "text": "Dataset Information"
+  },
+  {
+    "index": 1236,
+    "style": "Heading 1",
+    "text": "9.4 Appendix"
+  },
+  {
+    "index": 1237,
+    "style": "Heading 2",
+    "text": "System Outputs and Interaction Samples"
+  },
+  {
+    "index": 1242,
+    "style": "Heading 1",
+    "text": "9.5 Appendix"
+  },
+  {
+    "index": 1243,
+    "style": "Heading 2",
+    "text": "Performance Evaluation Summary"
+  }
+]

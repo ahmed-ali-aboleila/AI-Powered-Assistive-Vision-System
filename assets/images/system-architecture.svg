@@ -1,0 +1,194 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1400 1450" width="1400" height="1450">
+  <defs>
+    <filter id="shadow" x="-10%" y="-10%" width="120%" height="120%">
+      <feDropShadow dx="0" dy="2" stdDeviation="4" flood-color="#000000" flood-opacity="0.05"/>
+    </filter>
+    <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#475569"/>
+    </marker>
+    <marker id="arrow-orange" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#f97316"/>
+    </marker>
+    <marker id="arrow-gray" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto">
+      <path d="M 0 1 L 10 5 L 0 9 z" fill="#94a3b8"/>
+    </marker>
+  </defs>
+
+  <!-- Background -->
+  <rect width="100%" height="100%" fill="#ffffff" />
+
+  <!-- Titles -->
+  <text x="700" y="80" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="36" font-weight="800" fill="#0f172a" text-anchor="middle">AI-Powered Assistive Vision System</text>
+  <text x="700" y="120" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="22" font-weight="600" fill="#64748b" text-anchor="middle">Runtime System Architecture</text>
+
+  <!-- Runtime Boundary -->
+  <rect x="300" y="260" width="800" height="980" rx="16" fill="#f8fafc" stroke="#e2e8f0" stroke-width="2" stroke-dasharray="10,10"/>
+  <text x="320" y="290" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#94a3b8">Runtime Pipeline</text>
+
+  <!-- Paths -->
+  <!-- Dashed External Connections -->
+  <line x1="270" y1="620" x2="340" y2="620" stroke="#f97316" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+  <line x1="270" y1="760" x2="340" y2="760" stroke="#f97316" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+  <line x1="1130" y1="620" x2="1060" y2="620" stroke="#f97316" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+  <line x1="270" y1="960" x2="340" y2="1020" stroke="#f97316" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+  <line x1="270" y1="1040" x2="340" y2="1040" stroke="#f97316" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-orange)"/>
+  
+  <line x1="700" y1="210" x2="700" y2="290" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-gray)"/>
+  <line x1="700" y1="1210" x2="700" y2="1280" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-gray)"/>
+  <line x1="270" y1="1140" x2="340" y2="1060" stroke="#94a3b8" stroke-width="2" stroke-dasharray="6,4" marker-end="url(#arrow-gray)"/>
+
+  <!-- Solid Runtime Connections -->
+  <line x1="700" y1="380" x2="700" y2="440" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 700 510 L 700 550" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 550 L 700 550 L 920 550" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 550 L 480 570" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 920 550 L 920 570" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <line x1="480" y1="660" x2="480" y2="720" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <line x1="920" y1="660" x2="920" y2="720" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 480 790 L 480 840" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 920 790 L 920 840" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 840 L 920 840" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 700 840 L 700 860" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 700 930 L 700 970" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 970 L 700 970 L 920 970" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 970 L 480 990" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+  <path d="M 920 970 L 920 990" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <path d="M 480 1080 L 480 1120" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 920 1080 L 920 1120" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 480 1120 L 920 1120" fill="none" stroke="#475569" stroke-width="2"/>
+  <path d="M 700 1120 L 700 1140" fill="none" stroke="#475569" stroke-width="2" marker-end="url(#arrow)"/>
+
+  <!-- Nodes -->
+  <!-- Storage / External Data (Orange) -->
+  <g transform="translate(150, 620)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412" text-anchor="middle">Face Database</text>
+    <text x="0" y="16" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#c2410c" text-anchor="middle">(face_data.pkl)</text>
+  </g>
+
+  <g transform="translate(150, 760)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412" text-anchor="middle">Blocked Users</text>
+    <text x="0" y="16" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#c2410c" text-anchor="middle">(blocked.json)</text>
+  </g>
+
+  <g transform="translate(1250, 620)">
+    <rect x="-120" y="-35" width="240" height="70" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412" text-anchor="middle">Emotion Models</text>
+    <text x="0" y="12" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#c2410c" text-anchor="middle">TensorFlow (.h5)</text>
+    <text x="0" y="27" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#c2410c" text-anchor="middle">TensorFlow Lite (.tflite)</text>
+  </g>
+
+  <g transform="translate(150, 960)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412" text-anchor="middle">Vosk English Model</text>
+  </g>
+
+  <g transform="translate(150, 1040)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#fff7ed" stroke="#f97316" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#9a3412" text-anchor="middle">Vosk Arabic Model</text>
+  </g>
+
+  <!-- Hardware (Gray) -->
+  <g transform="translate(700, 180)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Camera</text>
+    <text x="0" y="16" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">(Hardware)</text>
+  </g>
+
+  <g transform="translate(150, 1140)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Microphone</text>
+    <text x="0" y="16" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">(Hardware)</text>
+  </g>
+
+  <g transform="translate(700, 1320)">
+    <rect x="-120" y="-30" width="240" height="60" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-2" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Speaker</text>
+    <text x="0" y="16" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#64748b" text-anchor="middle">(Hardware)</text>
+  </g>
+
+  <!-- Deployment Targets Box Wrapper -->
+  <rect x="1110" y="300" width="280" height="200" rx="16" fill="none" stroke="#cbd5e1" stroke-width="2" stroke-dasharray="6,6"/>
+  <text x="1250" y="330" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#64748b" text-anchor="middle">Deployment Targets</text>
+
+  <g transform="translate(1250, 380)">
+    <rect x="-120" y="-25" width="240" height="50" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Windows</text>
+  </g>
+
+  <g transform="translate(1250, 450)">
+    <rect x="-120" y="-25" width="240" height="50" rx="10" fill="#f8fafc" stroke="#94a3b8" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="15" font-weight="700" fill="#334155" text-anchor="middle">Raspberry Pi 4 Model B</text>
+  </g>
+
+  <!-- Runtime Nodes (Blue, Purple, Green, Slate) -->
+  <!-- Vision (Blue) -->
+  <g transform="translate(700, 340)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#1e40af" text-anchor="middle">Video Capture</text>
+    <text x="0" y="15" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle">(OpenCV)</text>
+  </g>
+
+  <g transform="translate(700, 480)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#eff6ff" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#1e40af" text-anchor="middle">Face Detection</text>
+    <text x="0" y="15" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" fill="#2563eb" text-anchor="middle">(OpenCV Haar Cascade)</text>
+  </g>
+
+  <!-- AI Models (Purple) -->
+  <g transform="translate(480, 620)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b21a8" text-anchor="middle">Face Recognition</text>
+    <text x="0" y="15" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" fill="#9333ea" text-anchor="middle">DeepFace / FaceNet512</text>
+  </g>
+
+  <g transform="translate(920, 620)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-10" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b21a8" text-anchor="middle">Emotion Recognition</text>
+    <text x="0" y="10" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#9333ea" text-anchor="middle">TensorFlow (.h5)</text>
+    <text x="0" y="26" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#9333ea" text-anchor="middle">TensorFlow Lite (.tflite)</text>
+  </g>
+
+  <g transform="translate(480, 760)">
+    <rect x="-130" y="-30" width="260" height="60" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b21a8" text-anchor="middle">Liveness Detection</text>
+  </g>
+
+  <g transform="translate(920, 760)">
+    <rect x="-130" y="-30" width="260" height="60" rx="10" fill="#faf5ff" stroke="#a855f7" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#6b21a8" text-anchor="middle">Emotion Prediction</text>
+  </g>
+
+  <!-- Logic Controller (Slate) -->
+  <g transform="translate(700, 900)">
+    <rect x="-130" y="-30" width="260" height="60" rx="10" fill="#f1f5f9" stroke="#64748b" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#0f172a" text-anchor="middle">Logic Controller</text>
+  </g>
+
+  <!-- Voice (Green) -->
+  <g transform="translate(480, 1040)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#166534" text-anchor="middle">Speech Recognition</text>
+    <text x="0" y="15" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#15803d" text-anchor="middle">Google STT + Vosk Offline</text>
+  </g>
+
+  <g transform="translate(920, 1040)">
+    <rect x="-130" y="-40" width="260" height="80" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="-5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#166534" text-anchor="middle">Text-to-Speech</text>
+    <text x="0" y="15" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="13" fill="#15803d" text-anchor="middle">Edge TTS / SAPI / espeak</text>
+  </g>
+
+  <g transform="translate(700, 1180)">
+    <rect x="-130" y="-30" width="260" height="60" rx="10" fill="#f0fdf4" stroke="#22c55e" stroke-width="2" filter="url(#shadow)"/>
+    <text x="0" y="5" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="16" font-weight="700" fill="#166534" text-anchor="middle">Audio Feedback</text>
+  </g>
+
+  <!-- Footer -->
+  <text x="700" y="1400" font-family="Inter, Segoe UI, Arial, sans-serif" font-size="14" fill="#94a3b8" text-anchor="middle">Generated from the actual runtime architecture of the project.</text>
+</svg>
