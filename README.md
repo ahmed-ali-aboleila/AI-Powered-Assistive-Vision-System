@@ -343,5 +343,5 @@ This project is distributed under the [MIT License](LICENSE). See the `LICENSE` 
 
 ## 👨‍💻 Author
 
-- **Name:** Ahmed Ali Abo Leila
+- **Name:** Ahmed Ali Abo-Leila
 - **GitHub:** [@ahmed-ali-aboleila](https://github.com/ahmed-ali-aboleila)
