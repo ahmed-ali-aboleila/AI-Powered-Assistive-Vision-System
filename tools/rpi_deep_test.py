@@ -181,7 +181,7 @@ def check_tflite_emotion():
     print("\n== TFLite Emotion ==")
     try:
         import numpy as np
-        from shared.model_runtime import TFLiteEmotionModel
+        from src.utils.model_runtime import TFLiteEmotionModel
         model_path = ROOT / config.TFLITE_MODEL_PATH
         model = TFLiteEmotionModel(str(model_path))
         x = np.zeros((1, 48, 48, 1), dtype="float32")

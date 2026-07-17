@@ -35,7 +35,7 @@ This installs:
 Google Drive folder:
 
 ```text
-https://drive.google.com/drive/folders/1XIOsn-erryTL9f5AB7jxJTJ5kEhGC1cL?usp=drive_link
+https://drive.google.com/drive/folders/1rxsUyN6zj4Hjq6SpkU8i3I3DqUFzlhNE?usp=sharing
 ```
 
 Expected structure:

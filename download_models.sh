@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-MODELS_DRIVE_URL="${MODELS_DRIVE_URL:-https://drive.google.com/drive/folders/1XIOsn-erryTL9f5AB7jxJTJ5kEhGC1cL?usp=drive_link}"
+MODELS_DRIVE_URL="${MODELS_DRIVE_URL:-https://drive.google.com/drive/folders/1rxsUyN6zj4Hjq6SpkU8i3I3DqUFzlhNE?usp=sharing}"
 
 if [ -d ".venv" ]; then
   source .venv/bin/activate

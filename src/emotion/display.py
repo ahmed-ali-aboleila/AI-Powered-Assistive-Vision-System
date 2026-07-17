@@ -5,7 +5,7 @@ import cv2
 import sys, os
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 import config
-from shared.draw_utils import draw_text_unicode
+from utils.draw_utils import draw_text_unicode
 
 
 def draw_results(frame, emotion, confidence, face_box, source):

@@ -23,7 +23,7 @@ from logic_controller import (
     _WHO_WORDS, _LIST_WORDS, _QUIET_WORDS, _SPEAK_WORDS,
     _MALE_AR_WORDS, _FEMALE_AR_WORDS, _MALE_EN_WORDS, _FEMALE_EN_WORDS
 )
-from shared.stt import OFFLINE_COMMANDS_EN, OFFLINE_COMMANDS_AR, _looks_like_vosk_noise
+from src.voice.stt import OFFLINE_COMMANDS_EN, OFFLINE_COMMANDS_AR, _looks_like_vosk_noise
 
 class TestVoiceCommands(unittest.TestCase):
     def setUp(self):

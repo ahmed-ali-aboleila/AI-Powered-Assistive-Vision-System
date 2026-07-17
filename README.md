@@ -96,9 +96,22 @@ For a comprehensive explanation of the runtime workflow, module interactions, an
 
 The assistive vision system supports dual execution modes natively: a standard desktop environment and a lightweight edge deployment targeting the Raspberry Pi. When executing on Windows, the software uses the standard desktop runtime profile with the full TensorFlow model and a desktop-oriented configuration. Conversely, the Raspberry Pi deployment leverages a performance-oriented runtime profile explicitly designed for resource-constrained hardware. By utilizing TensorFlow Lite inference models and headless OpenCV, the edge deployment minimizes memory footprint and CPU overhead. This deployment profile keeps the core functionality suitable for resource-constrained environments while maintaining feature parity with the desktop version where practical.
 
+## 📥 Download Required Models
+
+To comply with GitHub's file size recommendations, large AI model weights and training artifacts are hosted externally. The following directories are intentionally excluded from this repository:
+
+- `models/` (Contains the Vosk offline speech models and TensorFlow/TFLite production weights)
+- `cnn_v3/` (Historical training artifacts)
+- `cnn_v6/` (Historical training artifacts)
+- `ensemble/` (Historical training artifacts)
+
+**Download Link:** [Google Drive - AI Models & Artifacts](https://drive.google.com/drive/folders/1rxsUyN6zj4Hjq6SpkU8i3I3DqUFzlhNE?usp=sharing)
+
+You must download these resources and place the folders directly into the project root directory before running the application.
+
 ## 📦 Installation & Setup
 
-## Prerequisites
+### Prerequisites
 
 - Python 3.12 (required by the current Windows scripts)
 - Git
@@ -106,49 +119,43 @@ The assistive vision system supports dual execution modes natively: a standard d
 - Microphone
 - Speaker / Headphones
 
-> **Note**
->
-> AI models are distributed separately because of their size and are not included in the Git repository.
-
-## Windows Installation
+### Windows Installation
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/AhmedAli40/Assistive-Vision-Raspberry-Pi.git
+   cd Assistive-Vision-Raspberry-Pi
    ```
-2. Download the required AI models and place them in the appropriate locations inside the `models/` directory before launching the application.
-3. Run `install.bat`.
-4. Launch the application using `run.bat`.
+2. Download the required resources from the Google Drive link above.
+3. Extract and place the downloaded folders (e.g., `models/`) directly into the project root directory.
+4. Run the installation script:
+   ```bat
+   install.bat
+   ```
+5. Launch the application:
+   ```bat
+   run.bat
+   ```
 
 *Note: The Windows scripts currently use `py -3.12`.*
 
-## Raspberry Pi Installation
+### Raspberry Pi Installation
 
 1. Clone the repository:
    ```bash
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/AhmedAli40/Assistive-Vision-Raspberry-Pi.git
+   cd Assistive-Vision-Raspberry-Pi
    ```
-2. Run `install_pi.sh`.
-3. Download the required AI models and place them in the appropriate locations inside the `models/` directory before launching the application (or use `download_models.sh` if available).
-4. Launch the application using `run_pi.sh`.
-
-*Note: The Raspberry Pi setup creates and uses a `.venv` virtual environment automatically.*
-
-## AI Models
-
-- AI models are not stored in Git because of file size.
-- They must be downloaded separately.
-- Place them inside the `models/` directory.
-- `download_models.sh` is provided as a helper for Linux/Raspberry Pi users.
-
-## Notes
-
-- Windows uses the standard desktop runtime.
-- Raspberry Pi uses the optimized TensorFlow Lite runtime profile.
-- The Raspberry Pi launcher automatically configures environment variables for edge deployment.
-- The application expects the required AI models to be available before startup.
+2. Download the required resources from Google Drive (or use `./download_models.sh` for an automated download).
+3. Place the downloaded folders directly into the project root directory.
+4. Run the installation script (this sets up a `.venv` automatically):
+   ```bash
+   ./install_pi.sh
+   ```
+5. Launch the application:
+   ```bash
+   ./run_pi.sh
+   ```
 
 ## 🚀 Running the Application
 
@@ -320,3 +327,21 @@ The following areas represent logical extensions to the current architecture to 
 
 ### Developer Experience
 - Transition the hardcoded configuration system to a dynamic format to simplify rapid parameter tuning without modifying source code.
+
+## 📄 License
+
+This project is distributed under the [MIT License](LICENSE). See the `LICENSE` file for more details.
+
+## 🙏 Acknowledgments
+
+- **New Mansoura University:** For providing a supportive academic environment, modern facilities, and access to the essential resources that enabled the successful completion of this work.
+- **TensorFlow / Keras:** For powering the emotion classification neural networks.
+- **OpenCV:** For real-time camera manipulation and Haar Cascade face detection.
+- **DeepFace:** For providing the underlying Facenet512 facial embedding pipeline.
+- **Vosk (Alpha Cephei):** For enabling robust, offline, bilingual Speech-to-Text capabilities.
+- **Edge-TTS:** For providing the natural neural voices used in the audio feedback system.
+
+## 👨‍💻 Author
+
+- **Name:** Ahmed Ali Abo Leila
+- **GitHub:** [@AhmedAli40](https://github.com/AhmedAli40)
